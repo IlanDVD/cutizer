@@ -51,8 +51,8 @@ Images provisoires créées avec l’outil intégré imagegen. Prompts dans `src
 - `npm run test:desktop` : lance réellement Electron et le suivi Windows, vérifie l’interface et les quatre overlays, enregistre des captures dans `test-output`. Utilise un profil isolé, sans toucher aux statistiques normales. Ce test complet nécessite de laisser la fenêtre au premier plan et un PC non inactif. Pour vérifier uniquement les interactions et overlays pendant une autre activité : `npm run test:desktop -- --no-captures --smoke-ui-only`.
 - `npm run pack` : prépare `dist/Cutizer/Cutizer.exe` et ses dépendances. Application portable non signée, pour test local.
 
-## Téléphone
+## Android — Instagram
 
-Cette livraison est uniquement le prototype PC. L’intégration Android/iOS n’est pas implémentée. Le moteur des règles et les assets sont séparés pour préparer le portage ; détection des applications et overlays devront être remplacés par les capacités et autorisations de chaque système mobile.
+Une application Android native est disponible dans [`android/`](android/README.md), pour Android 8 ou plus récent. Elle suit Instagram et reprend les quatre overlays, avec configuration des autorisations, notification de suivi, statistiques locales et essais rapides. Le workflow **Android APK** compile l’APK et exécute les tests. Voir le guide Android pour l’installation et les limites. La version iOS n’est pas implémentée.
 
 Références techniques : https://www.electronjs.org/docs/latest/api/browser-window/ et https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getforegroundwindow.
