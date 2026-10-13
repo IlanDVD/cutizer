@@ -63,7 +63,7 @@ final class OverlayController {
         } else {
             // Opaque spells intentionally take touches until dismissed, rather than
             // relying on touch forwarding which Android disallows at this opacity.
-            effect.setOnTouchListener((view, event) -> true);
+            effect.setClickable(true);
         }
         close = new TextView(context);
         close.setTextColor(Color.rgb(64, 84, 55)); close.setTextSize(12);
@@ -92,6 +92,8 @@ final class OverlayController {
         final int stage;
         final long duration, start = SystemClock.elapsedRealtime();
         final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
+        final RectF spriteBounds = new RectF(), bubbleBounds = new RectF();
+        final Typeface typeface = Typeface.create("sans-serif", Typeface.NORMAL);
         final Bitmap sprite;
         final float density;
         boolean stopped;
@@ -138,16 +140,17 @@ final class OverlayController {
             }
             float height = size * sprite.getHeight() / sprite.getWidth();
             canvas.save(); canvas.rotate(rotation, x + size / 2, y + height * .85f);
-            paint.setAlpha(255); canvas.drawBitmap(sprite, null, new RectF(x, y, x + size, y + height), paint); canvas.restore();
+            spriteBounds.set(x, y, x + size, y + height);
+            paint.setAlpha(255); canvas.drawBitmap(sprite, null, spriteBounds, paint); canvas.restore();
             if (stage != 0) bubble(canvas, w, Math.max(85 * density, y - 12 * density), stage == 1 ? "Encore un petit scroll ?" : stage == 2 ? "Moi ? J’ai tout mon temps." : "Un peu de grand air ?");
             canvas.restoreToCount(layer);
             if (!stopped && elapsed < duration) postInvalidateDelayed(stage == 2 && elapsed > 1100 && elapsed < duration - 1200 ? 500 : 33);
         }
         private void bubble(Canvas canvas, float width, float y, String text) {
-            paint.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL)); paint.setTextSize(13 * density); paint.setTextAlign(Paint.Align.CENTER);
+            paint.setTypeface(typeface); paint.setTextSize(13 * density); paint.setTextAlign(Paint.Align.CENTER);
             float boxWidth = Math.min(width - 24 * density, paint.measureText(text) + 32 * density);
-            RectF rect = new RectF((width - boxWidth)/2, y - 39 * density, (width + boxWidth)/2, y);
-            paint.setColor(0xFFFFFEF8); canvas.drawRoundRect(rect, 16*density, 16*density, paint);
+            bubbleBounds.set((width - boxWidth)/2, y - 39 * density, (width + boxWidth)/2, y);
+            paint.setColor(0xFFFFFEF8); canvas.drawRoundRect(bubbleBounds, 16*density, 16*density, paint);
             paint.setColor(0xFF566E49); canvas.drawText(text, width/2, y - 14*density, paint);
         }
         @Override protected void onDetachedFromWindow() { stopped = true; super.onDetachedFromWindow(); }

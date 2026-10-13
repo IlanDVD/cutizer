@@ -26,6 +26,8 @@ jobs:
       - name: Test, lint and assemble
         working-directory: android
         run: bash gradlew --no-daemon testDebugUnitTest lintDebug assembleDebug
+      - name: Verify APK signature
+        run: '"$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose android/app/build/outputs/apk/debug/app-debug.apk'
       - uses: actions/upload-artifact@v6
         if: always()
         with:
