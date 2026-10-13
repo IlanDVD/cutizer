@@ -1,0 +1,14 @@
+{
+  "name": "cutizer",
+  "version": "0.1.0",
+  "description": "Miso, votre petit compagnon de temps d’écran",
+  "private": true,
+  "main": "src/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/engine.test.cjs",
+    "test:desktop": "electron . --smoke-test",
+    "pack": "node scripts/package.cjs"
+  },
+  "devDependencies": { "electron": "44.7.0" }
+}

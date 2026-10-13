@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'">
+  <title>Cutizer · Miso</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#home" aria-label="Cutizer, accueil"><span class="brand-mark">c<span>✦</span></span>cutizer<span class="brand-dot">.</span></a>
+      <div class="sidebar-note">Un peu moins d’écran.<br>Un peu plus de toi.</div>
+      <nav aria-label="Navigation principale">
+        <button class="nav-item selected" data-page="home"><span class="nav-icon">⌂</span>Mon compagnon<span class="nav-dot"></span></button>
+        <button class="nav-item" data-page="stats"><span class="nav-icon">▥</span>Mon temps d’écran</button>
+        <button class="nav-item" data-page="apps"><span class="nav-icon">▦</span>Mes applications</button>
+        <button class="nav-item" data-page="lab"><span class="nav-icon">✧</span>Les interventions</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="small-sprout">❋</div><p>Les petites pauses<br>font les belles journées.</p><span class="desktop-label"><span></span> VERSION PC · 0.1</span></div>
+    </aside>
+    <main>
+      <header class="topbar"><span id="date-label"></span><button class="status-button" id="pause-button"><span class="status-dot"></span><span id="status-label">Miso se réveille</span><span class="pause-icon">Ⅱ</span></button></header>
+      <div id="error-banner" class="error-banner" hidden><span></span><button id="retry-button">Réessayer</button></div>
+      <section id="page-home" class="page home-page">
+        <div class="section-eyebrow">TON PETIT GARDIEN DU TEMPS</div>
+        <h1>Du temps pour ce qui compte.</h1>
+        <p class="subtitle">Miso veille sur tes pauses. Tout simplement.</p>
+        <div class="companion-scene">
+          <span class="scene-orbit orbit-one"></span><span class="scene-orbit orbit-two"></span>
+          <span class="spark spark-one">✧</span><span class="spark spark-two">✦</span><span class="spark spark-three">✧</span>
+          <div class="speech" id="miso-speech" aria-live="polite">Coucou, moi c’est Miso <span>♡</span></div>
+          <button class="mascot-button" id="pet-button" aria-label="Faire un câlin à Miso"><img src="assets/miso-happy.png" alt="Miso, une petite créature verte souriante aux oreilles en feuilles" draggable="false"></button>
+          <div class="ground-shadow"></div><span class="pet-hint">Un petit clic, un petit câlin.</span>
+        </div>
+        <div class="today-card">
+          <div class="today-icon">◷</div><div class="today-info"><span class="muted">Sur tes réseaux aujourd’hui</span><div><strong id="home-time">0 min</strong><span id="home-next">La première balade à 30 min</span></div><div class="progress-track"><div id="home-progress"></div></div></div>
+          <button class="arrow-button" data-go="stats" aria-label="Voir les statistiques">↗</button>
+        </div>
+        <div class="home-footer"><span><span class="tiny-leaf">✳</span> Il veille, tu respires.</span><button class="text-button" data-go="lab">Rencontrer son petit caractère <span>→</span></button></div>
+      </section>
+      <section id="page-stats" class="page" hidden>
+        <div class="section-eyebrow">CHAQUE PETITE PAUSE COMPTE</div><h1>Ton temps, en douceur.</h1><p class="subtitle">Un regard sur tes habitudes, sans te mettre la pression.</p>
+        <div class="metric-grid"><article class="metric"><span>Aujourd’hui</span><strong id="stats-total">0 min</strong><small>sur les applications suivies</small></article><article class="metric"><span>Petits rappels</span><strong id="stats-interventions">0</strong><small>interventions de Miso aujourd’hui</small></article><article class="metric"><span>En ce moment</span><strong id="stats-active" class="small-metric">Une petite respiration</strong><small id="stats-active-detail">Aucun réseau détecté</small></article></div>
+        <article class="panel"><div class="panel-heading"><h2>Les sept derniers jours</h2><span>minutes / jour</span></div><div id="week-chart" class="week-chart"></div></article>
+        <article class="panel"><div class="panel-heading"><h2>Un peu plus en détail</h2><span>Aujourd’hui</span></div><div id="app-breakdown"></div></article>
+        <p class="footnote">Les données restent sur ce PC. Le compteur repart à zéro à minuit, et garde 30 jours d’historique.</p>
+      </section>
+      <section id="page-apps" class="page" hidden>
+        <div class="section-eyebrow">À CHACUN SES HABITUDES</div><h1>Où Miso t’accompagne.</h1><p class="subtitle">Choisis les applications qui font parfois oublier l’heure.</p>
+        <div class="info-note"><span>ⓘ</span><p>Le temps compte seulement quand l’application est au premier plan. Dans un navigateur, Miso reconnaît le réseau grâce au titre de l’onglet. Le suivi s’arrête après 5 minutes sans activité.</p></div>
+        <div id="app-list" class="app-list"></div>
+        <details class="custom-rule"><summary>＋ Ajouter une application ou un site</summary><form id="rule-form"><label>Nom de l’application<input id="rule-name" maxlength="60" required placeholder="Ex. Pinterest"></label><label>Mots dans le titre de l’onglet<input id="rule-keywords" maxlength="400" placeholder="pinterest, un autre mot-clé"></label><label>Nom du processus Windows (facultatif)<input id="rule-process" maxlength="100" placeholder="Ex. Pinterest.exe"></label><p class="footnote">Indique au moins un mot-clé ou un processus. Sépare les mots-clés par des virgules.</p><button class="primary-button" type="submit">Ajouter à mes applications</button><span id="form-message" role="status"></span></form></details>
+        <p class="footnote">Miso doit rester ouvert, même réduit dans la barre des tâches. Fermer sa fenêtre arrête le suivi.</p>
+      </section>
+      <section id="page-lab" class="page" hidden>
+        <div class="section-eyebrow">DOUX, MAIS UN PEU TÊTU</div><h1>Il a son petit caractère.</h1><p class="subtitle">Plus le temps passe, plus Miso se fait remarquer.</p>
+        <div class="demo-toolbar"><span><span class="live-dot"></span>Atelier de démonstration</span><label class="checkbox-label"><input id="short-preview" type="checkbox" checked>Essais courts · 12 secondes</label></div>
+        <div class="stage-list">
+          <article class="stage-card"><span class="stage-number">01</span><div class="stage-art art-walk"><img src="assets/miso-happy.png" alt=""></div><div class="stage-copy"><span class="stage-time">APRÈS 30 MINUTES</span><h2>Juste un petit passage.</h2><p>Miso se balade en bas de ton écran,<br>de droite à gauche. Un premier coucou.</p><span class="duration">12 secondes de compagnie</span></div><button class="play-button" data-preview="walk" aria-label="Tester la balade">▷<span>Essayer</span></button></article>
+          <article class="stage-card"><span class="stage-number">02</span><div class="stage-art art-rappel"><img src="assets/miso-judge.png" alt=""></div><div class="stage-copy"><span class="stage-time">APRÈS 60 MINUTES</span><h2>On est encore là ?</h2><p>Une descente en rappel, un regard appuyé…<br>puis il remonte comme si de rien n’était.</p><span class="duration">15 secondes, dont un petit jugement</span></div><button class="play-button" data-preview="rappel" aria-label="Tester la descente en rappel">▷<span>Essayer</span></button></article>
+          <article class="stage-card"><span class="stage-number">03</span><div class="stage-art art-judge"><img src="assets/miso-judge.png" alt=""></div><div class="stage-copy"><span class="stage-time">APRÈS 90 MINUTES</span><h2>Il peut attendre. Vraiment.</h2><p>Il surgit du bas, croise les bras<br>et reste là. Le message est assez clair.</p><span class="duration">2 minutes à te regarder</span></div><button class="play-button" data-preview="judge" aria-label="Tester les bras croisés">▷<span>Essayer</span></button></article>
+          <article class="stage-card"><span class="stage-number">04</span><div class="stage-art art-magic"><img src="assets/miso-happy.png" alt=""><span>✦</span></div><div class="stage-copy"><span class="stage-time">APRÈS 120 MINUTES</span><h2>Le sort du grand air.</h2><p>Miso voit grand. Ses sorts recouvrent l’écran<br>pour t’inviter à une vraie déconnexion.</p><span class="duration">10 minutes de magie, puis il s’estompe</span></div><button class="play-button" data-preview="magic" aria-label="Tester les sorts">▷<span>Essayer</span></button></article>
+        </div>
+        <div class="info-note lab-note"><span>♡</span><p>Tu gardes la main : chaque animation a un bouton <b>Masquer</b>.<br>Raccourci de secours : <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>M</kbd>. Les essais ne changent pas tes statistiques.</p></div>
+        <p class="footnote">Chaque palier se déclenche une fois par jour, sur le temps cumulé des applications choisies. L’overlay apparaît sur l’écran du curseur.</p>
+      </section>
+    </main>
+  </div>
+  <div id="toast" role="status" hidden></div>
+  <script src="renderer.js"></script>
+</body>
+</html>
