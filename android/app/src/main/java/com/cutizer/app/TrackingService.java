@@ -6,8 +6,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ServiceInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -99,7 +101,10 @@ public final class TrackingService extends Service {
                 .addAction(new Notification.Action.Builder(null, "Masquer", hide).build())
                 .addAction(new Notification.Action.Builder(null, "Arrêter", stop).build()).build();
     }
-    private void updateNotification() { getSystemService(NotificationManager.class).notify(NOTIFICATION_ID, notification()); }
+    private void updateNotification() {
+        if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) return;
+        getSystemService(NotificationManager.class).notify(NOTIFICATION_ID, notification());
+    }
     private void stopTracking() {
         if (stopping) return;
         stopping = true; store.enabled(false); store.save(); instagramActive = false;
